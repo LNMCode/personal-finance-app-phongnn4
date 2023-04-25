@@ -24,6 +24,8 @@ interface Constants {
         const val FIELD_DATE = "date"
         const val FIELD_MOBILE = "mobile"
         const val FIELD_NAME = "name"
+        const val FIELD_TYPE = "type"
+        const val FIELD_START_FROM = "startFrom"
 
         fun navToLoginActivity(context: Context) {
             val intent = Intent(context, SignInUpActivity::class.java)

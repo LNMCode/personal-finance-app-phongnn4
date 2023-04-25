@@ -5,15 +5,23 @@ import com.example.personalfinanceapp.domain.model.bill.DailyBill
 import kotlinx.coroutines.flow.Flow
 
 interface UserUseCase {
-    suspend fun createUser(userId: String) : Flow<Boolean>
+    suspend fun createUser(userId: String): Flow<Boolean>
 
-    suspend fun getUserIdCurrent() : Flow<String>
+    suspend fun getUserIdCurrent(): Flow<String>
 
-    suspend fun fetchUserInformation(userId: String) : Flow<UserModel?>
+    suspend fun fetchUserInformation(userId: String): Flow<UserModel?>
 
     suspend fun addBill(userId: String, dailyBills: List<DailyBill>): Flow<Boolean>
 
     suspend fun addIncome(userId: String, income: Long): Flow<Boolean>
 
     suspend fun minusMoney(userId: String, moneyOrigin: Long, moneyMinus: Long): Flow<Boolean>
+
+    suspend fun updateCreditLimit(
+        userId: String,
+        money: Long,
+        note: String,
+        type: String,
+        startFrom: String
+    ): Flow<Boolean>
 }

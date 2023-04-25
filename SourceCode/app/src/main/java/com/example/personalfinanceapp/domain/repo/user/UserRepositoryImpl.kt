@@ -92,4 +92,28 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun updateCreditLimit(
+        userId: String,
+        money: Long,
+        note: String,
+        type: String,
+        startFrom: String,
+    ) = flow {
+        try {
+            val data = hashMapOf(
+                Constants.FIELD_CREDIT_LIMIT to hashMapOf(
+                    Constants.FIELD_MONEY to money,
+                    Constants.FIELD_TYPE to type,
+                    Constants.FIELD_NOTE to note,
+                    Constants.FIELD_START_FROM to startFrom,
+                )
+            )
+            db.collection(Constants.COLLECTION_USER)
+                .document(userId).update(data as Map<String, Any>).await()
+            emit(true)
+        } catch (e: Exception) {
+            emit(false)
+        }
+    }
+
 }

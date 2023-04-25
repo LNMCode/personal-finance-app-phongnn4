@@ -1,6 +1,8 @@
 package com.example.personalfinanceapp.domain.model
 
 data class CreditLimit(
-    val money: String,
-    val note: String,
+    val money: Long? = null,
+    val note: String? = null,
+    val type: String? = null,
+    val startFrom: String? = null,
 )

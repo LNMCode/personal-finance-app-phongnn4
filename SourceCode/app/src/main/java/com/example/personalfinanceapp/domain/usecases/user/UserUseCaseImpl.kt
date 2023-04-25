@@ -37,4 +37,14 @@ class UserUseCaseImpl @Inject constructor(
     ) = handleFlow {
         userRepository.minusMoney(userId, moneyOrigin, moneyMinus)
     }
+
+    override suspend fun updateCreditLimit(
+        userId: String,
+        money: Long,
+        note: String,
+        type: String,
+        startFrom: String,
+    ) = handleFlow {
+        userRepository.updateCreditLimit(userId, money, note, type, startFrom)
+    }
 }
