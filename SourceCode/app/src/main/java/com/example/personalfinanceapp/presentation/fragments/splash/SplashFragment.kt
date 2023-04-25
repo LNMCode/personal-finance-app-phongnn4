@@ -51,7 +51,7 @@ class SplashFragment : Fragment() {
 
         Handler(Looper.myLooper()!!).postDelayed(
             {
-                findNavController().navigate(R.id.action_splashFragment_to_welcomeFragment01)
+                findNavController().navigate(R.id.action_splashFragment2_to_welcomeFragment012)
                 binding.cvProgressLine.hasCompletedDownload()
             }, 7000
         )

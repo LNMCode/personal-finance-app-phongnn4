@@ -2,6 +2,7 @@ package com.example.personalfinanceapp.presentation.fragments.kyc
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.personalfinanceapp.R
+import com.example.personalfinanceapp.constants.Constants
 import com.example.personalfinanceapp.databinding.FragmentKycBinding
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
@@ -114,7 +116,7 @@ class KycFragment : Fragment() {
 
     private fun logout() {
         binding.imgLogout.setOnClickListener {
-            findNavController().navigate(R.id.action_kycFragment_to_loginFragment)
+            Constants.navToLoginActivity(requireContext())
         }
     }
 

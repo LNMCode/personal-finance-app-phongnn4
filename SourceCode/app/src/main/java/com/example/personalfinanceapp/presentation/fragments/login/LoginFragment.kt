@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.personalfinanceapp.R
+import com.example.personalfinanceapp.constants.Constants.Companion.navToMainActivity
 import com.example.personalfinanceapp.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,15 +23,22 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setEventRegister()
+        setEventSignIn()
+    }
+
     private fun setEventRegister() {
         binding.tvRegisterNow.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
+            findNavController().navigate(R.id.action_loginFragment2_to_signUpFragment2)
         }
     }
 
     private fun setEventSignIn() {
         binding.btnSignIn.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_dashBoardFragment)
+            navToMainActivity(requireContext())
+            //findNavController().navigate(R.id.action_loginFragment_to_dashBoardFragment)
         }
     }
 }

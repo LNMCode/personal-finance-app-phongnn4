@@ -152,11 +152,11 @@ class WelcomeFragment01 : Fragment() {
     }
 
     private fun navigateToLogin() {
-        findNavController().navigate(R.id.action_welcomeFragment01_to_loginFragment)
+        findNavController().navigate(R.id.action_welcomeFragment012_to_loginFragment2)
     }
 
     private fun navigateToSignUp() {
-        findNavController().navigate(R.id.action_welcomeFragment01_to_signUpFragment)
+        findNavController().navigate(R.id.action_welcomeFragment012_to_signUpFragment2)
     }
 
 }
