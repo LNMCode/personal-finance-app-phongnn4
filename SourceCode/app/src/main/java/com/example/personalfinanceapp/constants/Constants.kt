@@ -8,6 +8,8 @@ import com.example.personalfinanceapp.presentation.activities.SignInUpActivity
 
 interface Constants {
     companion object {
+        const val COLLECTION_BILL = "bill"
+
         fun navToLoginActivity(context: Context) {
             val intent = Intent(context, SignInUpActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)

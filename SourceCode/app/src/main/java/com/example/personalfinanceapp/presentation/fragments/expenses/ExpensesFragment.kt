@@ -32,7 +32,6 @@ class ExpensesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navToFragments()
         initRecyclerViewBills()
     }
 
@@ -126,7 +125,7 @@ class ExpensesFragment : Fragment() {
             dailyBillList5
         )
     }
-
+/*
     private fun navToFragments() {
         binding.apply {
 
@@ -163,10 +162,9 @@ class ExpensesFragment : Fragment() {
                 }
             }
         }
-    }
+    }*/
 
     override fun onStart() {
         super.onStart()
-        binding.bottomNavBar.menu.findItem(R.id.btn_nav_expenses).isChecked = true
     }
 }

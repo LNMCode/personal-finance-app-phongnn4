@@ -38,37 +38,13 @@ class KycFragment : Fragment() {
         backToDashBoardFragment()
         logout()
         setDateInput()
-        setBottomNav()
         navToHomeFragment(binding.btnSubmit)
     }
 
     override fun onStart() {
         super.onStart()
-        binding.bottomNavBar.menu.findItem(R.id.btn_nav_account).isChecked = true
     }
 
-    private fun setBottomNav() {
-        binding.bottomNavBar.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.btn_nav_expenses -> {
-                    findNavController().navigate(R.id.action_kycFragment_to_homeFragment)
-                    true
-                }
-                R.id.btn_nav_home -> {
-                    findNavController().navigate(R.id.action_kycFragment_to_dashBoardFragment)
-                    true
-                }
-                R.id.btn_nav_add -> {
-                    findNavController().navigate(R.id.action_kycFragment_to_paymentFragment)
-                    true
-                }
-                else -> {
-                    item.isChecked = true
-                    false
-                }
-            }
-        }
-    }
 
     private fun navToHomeFragment(btnSubmit: MaterialButton) {
         btnSubmit.setOnClickListener {

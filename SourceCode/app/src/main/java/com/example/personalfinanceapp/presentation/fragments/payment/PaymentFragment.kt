@@ -30,13 +30,13 @@ class PaymentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navToFragments()
         initRecyclerView()
     }
 
     private fun initRecyclerView() {
         binding.rcvCategory.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = CategoryListAdapter(createCategoriesList())
         }
     }
@@ -55,43 +55,6 @@ class PaymentFragment : Fragment() {
             BillsCategory.getDefaultType(ENTERTAINMENT),
             BillsCategory.getDefaultType(INCOME),
             BillsCategory.getDefaultType(OTHER),
-
-            )
+        )
     }
-
-    private fun navToFragments() {
-        binding.apply {
-            imgBack.setOnClickListener {
-                findNavController().navigate(R.id.action_paymentFragment_to_homeFragment)
-            }
-
-            binding.bottomNavBar.setOnItemSelectedListener { item ->
-                when (item.itemId) {
-                    R.id.btn_nav_home -> {
-                        findNavController().navigate(R.id.action_paymentFragment_to_dashBoardFragment)
-                        true
-                    }
-                    R.id.btn_nav_expenses -> {
-                        findNavController().navigate(R.id.action_paymentFragment_to_homeFragment)
-                        true
-                    }
-                    R.id.btn_nav_account -> {
-                        findNavController().navigate(R.id.action_paymentFragment_to_kycFragment)
-                        true
-                    }
-                    else -> {
-                        item.isChecked = true
-                        false
-                    }
-                }
-            }
-
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        binding.bottomNavBar.menu.findItem(R.id.btn_nav_add).isChecked = true
-    }
-
 }
