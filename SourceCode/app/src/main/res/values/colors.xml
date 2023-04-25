@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="background_line_01">#DAF5F4</color>
+    <color name="background_line_02">#40C9C4</color>
+    <color name="text_color">#4873A6</color>
+
+<!-- Modify Color -->
+    <color name="light_blue">#699BF7</color>
+    <color name="dark_blue">#4873A6</color>
+    <color name="light_gray_1">#EDF5FA</color>
+    <color name="primary_color">#40C9C4</color>
+    <color name="primary_dark_color">#992D8E8A</color>
+    <color name="violet">#595386</color>
+    <color name="light_gray_2">#F8F8F8</color>
+    <color name="light_red">#F8777D</color>
+    <color name="light_blur_blue">#8FBBD2FB</color>
+    <color name="light_blur_gray">#ABEDF5FA</color>
+    <color name="blur_white">#47FFFFFF</color>
+    <color name="primary_text_color">#595386</color>
+    <color name="secondary_text_color">#4873A6</color>
+    <color name="input_form_color">#8E8383</color>
+    <color name="input_text_color">#555454</color>
+    <color name="separate_line_color">#585858</color>
+
+
+</resources>

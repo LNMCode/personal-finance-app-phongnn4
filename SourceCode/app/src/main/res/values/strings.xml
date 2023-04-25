@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Happy Wallet</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="loading">Loading…</string>
+    <string name="download">Download…</string>
+    <string name="title_app">Ting Ting Wallet</string>
+    <string name="skip">skip</string>
+    <string name="sign_up">Sign-up</string>
+    <string name="login">Login</string>
+    <string name="lets_log_in">Let\'s Sign you in</string>
+    <string name="password">Password</string>
+    <string name="email_phone_or_username">Email, phone or username</string>
+    <string name="txt_welcome_back">Welcome back , \nYou have been missed</string>
+    <string name="txt_forgot_password">Forgot Password ?</string>
+    <string name="or">or</string>
+    <string name="txt_question_register">Don\'t have an account ?</string>
+    <string name="register_now">Register Now</string>
+</resources>
