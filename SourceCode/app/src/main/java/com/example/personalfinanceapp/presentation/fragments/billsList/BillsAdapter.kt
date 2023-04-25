@@ -6,8 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.personalfinanceapp.databinding.ItemDesignBinding
 import com.example.personalfinanceapp.domain.model.bill.Bill
+import com.example.personalfinanceapp.domain.model.category.BillsCategory
 
-class BillsAdapter(private val billList: List<Bill>) : RecyclerView.Adapter<BillsAdapter.BillViewHolder>() {
+class BillsAdapter(private val billList: List<Bill>) :
+    RecyclerView.Adapter<BillsAdapter.BillViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BillViewHolder {
 
         val binding = ItemDesignBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -28,8 +30,10 @@ class BillsAdapter(private val billList: List<Bill>) : RecyclerView.Adapter<Bill
         @SuppressLint("SetTextI18n")
         fun bind(bill: Bill) {
             with(itemBinding) {
-                imvExpenseTypeIcon.setImageResource(bill.category.symbol)
-                tvCategoryName.text = bill.category.categoryName
+                imvExpenseTypeIcon.setImageResource(
+                    BillsCategory.getCategoryIconByName(bill.category)!!.symbol
+                )
+                tvCategoryName.text = bill.category
                 tvNote.text = bill.note
                 tvMoney.text = "$${bill.cost}"
             }

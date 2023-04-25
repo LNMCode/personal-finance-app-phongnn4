@@ -1,6 +1,7 @@
 package com.example.personalfinanceapp.base
 
 import android.util.Log
+import com.example.personalfinanceapp.domain.model.UserModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import retrofit2.Response
@@ -36,7 +37,7 @@ abstract class BaseUseCase {
         try {
             call.invoke().flowOn(dispatcher).collect { result = it }
         } catch (t: Throwable) {
-            Log.d("Error tag", "$call: notSuccessful")
+            Log.d("Error tag", "$call: notSuccessful: ${t.message}")
             throw parseError("${t.message}")
         }
         return flow {

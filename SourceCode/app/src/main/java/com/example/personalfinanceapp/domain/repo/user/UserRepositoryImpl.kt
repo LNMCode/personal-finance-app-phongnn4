@@ -1,9 +1,9 @@
 package com.example.personalfinanceapp.domain.repo.user
 
 import com.example.personalfinanceapp.constants.Constants
+import com.example.personalfinanceapp.domain.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -37,5 +37,12 @@ class UserRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             emit("")
         }
+    }
+
+    override suspend fun fetchUserInformation(userId: String) = flow {
+        val result = db.collection(Constants.COLLECTION_USER)
+            .document(userId).get().await()
+        val userModel = result.toObject(UserModel::class.java)
+        emit(userModel!!)
     }
 }

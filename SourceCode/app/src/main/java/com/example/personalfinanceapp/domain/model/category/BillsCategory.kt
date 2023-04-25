@@ -22,6 +22,11 @@ object BillsCategory {
         return categoryList
     }
 
+    fun getCategoryIconByName(name: String): Category? {
+        val list = getExpenseType()
+        return list.find { it.categoryName == name }
+    }
+
     fun getDefaultType(type: Type): Category {
         return when (type) {
             FOOD -> getExpenseType()[0]

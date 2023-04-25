@@ -1,10 +1,12 @@
 package com.example.personalfinanceapp.presentation.fragments.expenses
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.personalfinanceapp.R
@@ -13,6 +15,8 @@ import com.example.personalfinanceapp.domain.model.bill.Bill
 import com.example.personalfinanceapp.domain.model.bill.DailyBill
 import com.example.personalfinanceapp.domain.model.category.BillsCategory
 import com.example.personalfinanceapp.domain.model.category.Type.*
+import com.example.personalfinanceapp.presentation.fragments.dashboard.DashBoardRecentBillAdapter
+import com.example.personalfinanceapp.presentation.fragments.dashboard.RecentBillsItemModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.util.ArrayList
@@ -21,6 +25,8 @@ import java.util.ArrayList
 class ExpensesFragment : Fragment() {
 
     private lateinit var binding: FragmentExpensesBinding
+
+    private val expensesViewModel: ExpensesViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -31,6 +37,8 @@ class ExpensesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fetchUserInformation()
+        observerUserInformation()
         initRecyclerViewBills()
         navToFragments()
     }
@@ -40,9 +48,9 @@ class ExpensesFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         val adapter = DailyBillRcvAdapter(getDailyBillLists()) { selectedItem ->
 
-            val billList: ArrayList<Bill> = selectedItem.billList
+            val billList: ArrayList<Bill> = selectedItem.bills
             val billTime =
-                "${selectedItem.date.dayOfWeek}, ${selectedItem.date.month} ${selectedItem.date.dayOfMonth}, ${selectedItem.date.year}"
+                "${selectedItem.date!!.dayOfWeek}, ${selectedItem.date!!.month} ${selectedItem.date!!.dayOfMonth}, ${selectedItem.date!!.year}"
             val billTotal = "Total: $${selectedItem.amount}"
 
             val bundle = Bundle().apply {
@@ -56,73 +64,8 @@ class ExpensesFragment : Fragment() {
     }
 
     private fun getDailyBillLists(): List<DailyBill> {
-        val billList1 = arrayListOf(
-            Bill("1", BillsCategory.getDefaultType(RENTING_HOUSE), 10000, "April rent"),
-            Bill("2", BillsCategory.getDefaultType(ELECTRIC), 5000, "Electricity bill"),
-            Bill(
-                "3",
-                BillsCategory.getDefaultType(FOOD),
-                2000,
-                "Weekly grocery shopping"
-            )
-        )
-        val dailyBillList1 = DailyBill("1", LocalDate.of(2023, 4, 17), billList1, 0)
 
-        val billList2 = arrayListOf<Bill>(
-            Bill(
-                "4",
-                BillsCategory.getDefaultType(TRANSPORT),
-                1500,
-                "Metro card refill"
-            ),
-            Bill("5", BillsCategory.getDefaultType(WATER), 3000, "Water bill"),
-            Bill("6", BillsCategory.getDefaultType(ENTERTAINMENT), 2000, "Movie tickets")
-        )
-        val dailyBillList2 = DailyBill("2", LocalDate.of(2023, 4, 16), billList2, 0)
-
-        val billList3 = arrayListOf<Bill>(
-            Bill(
-                "7",
-                BillsCategory.getDefaultType(FOOD),
-                3500,
-                "Monthly grocery shopping"
-            ),
-            Bill("8", BillsCategory.getDefaultType(GAS), 4000, "Gas bill"),
-            Bill(
-                "9",
-                BillsCategory.getDefaultType(OTHER),
-                1000,
-                "Birthday gift for a friend"
-            )
-        )
-        val dailyBillList3 = DailyBill("3", LocalDate.of(2023, 4, 15), billList3, 0)
-
-        val billList4 = arrayListOf<Bill>(
-            Bill("10", BillsCategory.getDefaultType(RENTING_HOUSE), 10000, "April rent"),
-            Bill("11", BillsCategory.getDefaultType(ELECTRIC), 6000, "Electricity bill"),
-            Bill("12", BillsCategory.getDefaultType(TRANSPORT), 3000, "Gas refill")
-        )
-        val dailyBillList4 = DailyBill("4", LocalDate.of(2023, 4, 14), billList4, 0)
-
-        val billList5 = arrayListOf<Bill>(
-            Bill("13", BillsCategory.getDefaultType(TV), 4000, "Concert tickets"),
-            Bill(
-                "14",
-                BillsCategory.getDefaultType(FOOD),
-                2500,
-                "Weekly grocery shopping"
-            ),
-            Bill("15", BillsCategory.getDefaultType(ENTERTAINMENT), 1500, "Online shopping")
-        )
-        val dailyBillList5 = DailyBill("5", LocalDate.of(2023, 4, 13), billList5, 0)
-
-        // Printing the list of daily bill lists
         return listOf(
-            dailyBillList1,
-            dailyBillList2,
-            dailyBillList3,
-            dailyBillList4,
-            dailyBillList5
         )
     }
 
@@ -142,5 +85,30 @@ class ExpensesFragment : Fragment() {
 
             }
         }
+    }
+
+    private fun fetchUserInformation() {
+        expensesViewModel.fetchUser()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun observerUserInformation() {
+        expensesViewModel.userModelLiveData.observe(viewLifecycleOwner) {
+            binding.tvBalanceMoney.text = "$${it.money.toString()}"
+            it.dailyBills?.let { dailyBill ->
+                setUpRecycleViewRecentBills(dailyBill)
+            }
+        }
+    }
+
+    private fun setUpRecycleViewRecentBills(dailyBill: List<DailyBill>) {
+        val recentBillsModel = arrayListOf<RecentBillsItemModel>()
+        dailyBill.forEach { dBill ->
+            dBill.bills.forEach { bill ->
+                recentBillsModel.add(RecentBillsItemModel(bill, dBill.date!!))
+            }
+        }
+        val adapter = DailyBillRcvAdapter(dailyBill, {})
+        binding.rcvRecentBills.adapter = adapter
     }
 }

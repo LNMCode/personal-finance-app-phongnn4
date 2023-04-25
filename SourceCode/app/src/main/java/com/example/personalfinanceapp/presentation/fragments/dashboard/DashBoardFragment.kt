@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.personalfinanceapp.R
 import com.example.personalfinanceapp.databinding.FragmentDashBoardBinding
 import com.example.personalfinanceapp.domain.model.FinancialFunction
+import com.example.personalfinanceapp.domain.model.bill.DailyBill
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +20,7 @@ class DashBoardFragment : Fragment() {
 
     private lateinit var binding: FragmentDashBoardBinding
 
+    private val dashBoardViewModel: DashBoardViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -29,6 +32,19 @@ class DashBoardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecycleView()
+        fetchUserInformation()
+        observerUserInformation()
+    }
+
+    private fun setUpRecycleViewRecentBills(dailyBill: List<DailyBill>) {
+        val recentBillsModel = arrayListOf<RecentBillsItemModel>()
+        dailyBill.forEach { dBill ->
+            dBill.bills.forEach { bill ->
+                recentBillsModel.add(RecentBillsItemModel(bill, dBill.date!!))
+            }
+        }
+        val adapter = DashBoardRecentBillAdapter(recentBillsModel)
+        binding.rcvRecentBills.adapter = adapter
     }
 
     private fun initRecycleView() {
@@ -59,6 +75,19 @@ class DashBoardFragment : Fragment() {
                 screen,
                 Toast.LENGTH_SHORT
             ).show()
+        }
+    }
+
+    private fun fetchUserInformation() {
+        dashBoardViewModel.fetchUser()
+    }
+
+    private fun observerUserInformation() {
+        dashBoardViewModel.userModelLiveData.observe(viewLifecycleOwner) {
+            binding.tvMoney.text = it.money.toString()
+            it.dailyBills?.let { dailyBill ->
+                setUpRecycleViewRecentBills(dailyBill)
+            }
         }
     }
 }

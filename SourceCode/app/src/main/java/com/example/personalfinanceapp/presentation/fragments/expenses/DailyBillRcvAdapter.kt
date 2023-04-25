@@ -30,10 +30,10 @@ class DailyBillRcvAdapter(
 
         fun bind(billList: DailyBill) {
             with(binding) {
-                tvDate.text = billList.date.dayOfMonth.toString()
-                tvDaysOfTheWeek.text = billList.date.dayOfWeek.toString()
+                tvDate.text = billList.date!!.dayOfMonth.toString()
+                tvDaysOfTheWeek.text = billList.date!!.dayOfWeek.toString()
                 tvMonthAndYear.text =
-                    billList.date.month.toString() + " " + billList.date.year.toString()
+                    billList.date!!.month.toString() + " " + billList.date!!.year.toString()
                 tvTotalMoney.text = "$" + billList.amount
                 clHeader.setOnClickListener {
                     listener(billList)

@@ -3,13 +3,12 @@ package com.example.personalfinanceapp.domain.model.bill
 import java.time.LocalDate
 
 data class DailyBill(
-    val id: String,
-    val date: LocalDate,
-    private var _billList: ArrayList<Bill>,
+    var id: String? = null,
+    var date: LocalDate? = null,
+    var bills: ArrayList<Bill>,
+    var money: Long? = null,
     private var _amount: Long = 0
 ) {
-    val billList: ArrayList<Bill>
-        get() = _billList
 
     var amount: Long
         get() = _amount
@@ -18,6 +17,6 @@ data class DailyBill(
         }
 
     init {
-        amount = billList.sumOf { it.cost }
+        amount = bills.sumOf { it.cost }
     }
 }

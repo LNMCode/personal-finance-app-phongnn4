@@ -2,7 +2,6 @@ package com.example.personalfinanceapp.domain.usecases.accuracy
 
 import com.example.personalfinanceapp.base.BaseUseCase
 import com.example.personalfinanceapp.domain.repo.accuracy.AccuracyRepository
-import com.example.personalfinanceapp.domain.usecases.accuracy.AccuracyUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
