@@ -9,9 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.compose.ui.unit.Constraints
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.personalfinanceapp.R
+import com.example.personalfinanceapp.constants.Constants
 import com.example.personalfinanceapp.databinding.FragmentSplashBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -25,6 +28,8 @@ class SplashFragment : Fragment() {
 
     private lateinit var binding: FragmentSplashBinding
 
+    private val splashViewModel: SplashViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -35,7 +40,12 @@ class SplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkIsLogged()
         handleTime()
+    }
+
+    private fun checkIsLogged() {
+        splashViewModel.checkLogged()
     }
 
     private fun handleTime() {
@@ -51,10 +61,20 @@ class SplashFragment : Fragment() {
 
         Handler(Looper.myLooper()!!).postDelayed(
             {
-                findNavController().navigate(R.id.action_splashFragment2_to_welcomeFragment012)
                 binding.cvProgressLine.hasCompletedDownload()
+                handleNavScreen()
             }, 7000
         )
+    }
+
+    private fun handleNavScreen() {
+        splashViewModel.isLogged.observe(viewLifecycleOwner) {
+            if (it) {
+                Constants.navToMainActivity(requireContext())
+            } else {
+                findNavController().navigate(R.id.action_splashFragment2_to_welcomeFragment012)
+            }
+        }
     }
 
     private suspend fun loadingAppearing() {

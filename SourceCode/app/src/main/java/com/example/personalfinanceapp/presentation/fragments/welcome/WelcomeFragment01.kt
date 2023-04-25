@@ -9,6 +9,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -21,6 +22,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class WelcomeFragment01 : Fragment() {
 
+    private val welcomeViewModel: WelcomeViewModel by viewModels()
+
     private lateinit var binding: FragmentWelcome01Binding
     private lateinit var onBoardingItemsAdapter: OnBoardingItemsAdapter
     private lateinit var indicatorContainer: LinearLayoutCompat
@@ -29,7 +32,6 @@ class WelcomeFragment01 : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-
         binding = FragmentWelcome01Binding.inflate(inflater, container, false)
         return binding.root
     }
@@ -38,29 +40,12 @@ class WelcomeFragment01 : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setOnBoardingItems()
         setupIndicator()
+        setUpEventButtons()
     }
 
     private fun setOnBoardingItems() {
-        onBoardingItemsAdapter = OnBoardingItemsAdapter(
-            listOf(
-                OnBoardingItem(
-                    R.drawable.onboarding01,
-                    "Manage Your Money",
-                    "Saving money is one of the essential aspects of building wealth and having a secure financial future"
-                ),
-                OnBoardingItem(
-                    R.drawable.onboarding02,
-                    "It gives you a better future",
-                    "You can secure your future, indulge in the best of things that life has to offer and live a very fulfilling life"
-                ),
-                OnBoardingItem(
-                    R.drawable.onboarding03,
-                    "It provides for your children’s education",
-                    "With a considerable amount of savings, you can fuel your children’s dreams and pay for the best schools and colleges across the world"
-                )
-            )
-        )
-        val onBoardingViewPager = binding.vpOnBoarding as ViewPager2
+        onBoardingItemsAdapter = OnBoardingItemsAdapter(welcomeViewModel.listDataOnBoarding)
+        val onBoardingViewPager = binding.vpOnBoarding
         onBoardingViewPager.adapter = onBoardingItemsAdapter
         onBoardingViewPager.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
@@ -80,24 +65,9 @@ class WelcomeFragment01 : Fragment() {
                 navigateToLogin()
             }
         }
-
-        binding.btnSignup.setOnClickListener {
-            navigateToSignUp()
-        }
-
-        binding.btnLogin.setOnClickListener {
-            navigateToLogin()
-        }
-
-        binding.txtSkip.setOnClickListener {
-            navigateToLogin()
-        }
-
-
     }
 
     private fun setupIndicator() {
-
         val applicationContext = requireActivity().applicationContext
         indicatorContainer = binding.indicatorsContainer
         // Create an empty array to store indicator images
@@ -125,7 +95,6 @@ class WelcomeFragment01 : Fragment() {
     }
 
     private fun setCurrentIndicators(position: Int) {
-
         val applicationContext = requireActivity().applicationContext
 
         // The number of children in the group
@@ -148,6 +117,20 @@ class WelcomeFragment01 : Fragment() {
                     )
                 )
             }
+        }
+    }
+
+    private fun setUpEventButtons() {
+        binding.btnSignup.setOnClickListener {
+            navigateToSignUp()
+        }
+
+        binding.btnLogin.setOnClickListener {
+            navigateToLogin()
+        }
+
+        binding.txtSkip.setOnClickListener {
+            navigateToLogin()
         }
     }
 
