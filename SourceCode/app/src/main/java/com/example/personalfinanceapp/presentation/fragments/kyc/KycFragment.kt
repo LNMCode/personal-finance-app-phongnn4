@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.personalfinanceapp.R
 import com.example.personalfinanceapp.constants.Constants
@@ -25,6 +26,8 @@ class KycFragment : Fragment() {
 
     private lateinit var binding: FragmentKycBinding
 
+    private val kycViewModel: KycViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -37,6 +40,7 @@ class KycFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         backToDashBoardFragment()
         logout()
+        registerLogoutEvent()
         setDateInput()
         navToHomeFragment(binding.btnSubmit)
     }
@@ -44,7 +48,6 @@ class KycFragment : Fragment() {
     override fun onStart() {
         super.onStart()
     }
-
 
     private fun navToHomeFragment(btnSubmit: MaterialButton) {
         btnSubmit.setOnClickListener {
@@ -92,7 +95,15 @@ class KycFragment : Fragment() {
 
     private fun logout() {
         binding.imgLogout.setOnClickListener {
-            Constants.navToLoginActivity(requireContext())
+            kycViewModel.logOut()
+        }
+    }
+
+    private fun registerLogoutEvent() {
+        kycViewModel.isLogOuted.observe(viewLifecycleOwner) {
+            if (it) {
+                Constants.navToLoginActivity(requireContext())
+            }
         }
     }
 

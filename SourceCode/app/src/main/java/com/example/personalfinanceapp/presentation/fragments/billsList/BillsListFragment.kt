@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.personalfinanceapp.R
 import com.example.personalfinanceapp.databinding.FragmentBillsListBinding
 import com.example.personalfinanceapp.domain.model.bill.Bill
-import com.example.personalfinanceapp.presentation.adapter.BillsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

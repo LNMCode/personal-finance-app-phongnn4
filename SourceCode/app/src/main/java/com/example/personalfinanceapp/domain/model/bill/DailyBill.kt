@@ -3,7 +3,7 @@ package com.example.personalfinanceapp.domain.model.bill
 import java.time.LocalDate
 
 data class DailyBill(
-    val id: Int,
+    val id: String,
     val date: LocalDate,
     private var _billList: ArrayList<Bill>,
     private var _amount: Long = 0

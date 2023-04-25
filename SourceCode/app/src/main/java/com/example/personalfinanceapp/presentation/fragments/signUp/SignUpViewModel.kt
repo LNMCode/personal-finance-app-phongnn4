@@ -4,12 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.personalfinanceapp.base.BaseViewModel
 import com.example.personalfinanceapp.domain.usecases.accuracy.AccuracyUseCase
+import com.example.personalfinanceapp.domain.usecases.user.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val accuracyUseCase: AccuracyUseCase,
+    private val userUseCase: UserUseCase,
 ) : BaseViewModel() {
 
     private var _signUpStateMutableLiveData = MutableLiveData<SignUpState>()
@@ -21,6 +24,15 @@ class SignUpViewModel @Inject constructor(
         requestFlow {
             accuracyUseCase.signUpWithEmailAndPassword(email!!, password!!).collect {
                 _signUpStateMutableLiveData.postValue(it)
+                createUser()
+            }
+        }
+    }
+
+    private fun createUser() {
+        requestFlow {
+            userUseCase.getUserIdCurrent().collect { id ->
+                userUseCase.createUser(id).collect {}
             }
         }
     }

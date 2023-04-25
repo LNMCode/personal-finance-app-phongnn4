@@ -14,9 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.personalfinanceapp.R
-import com.example.personalfinanceapp.presentation.adapter.OnBoardingItemsAdapter
 import com.example.personalfinanceapp.databinding.FragmentWelcome01Binding
-import com.example.personalfinanceapp.domain.model.OnBoardingItem
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -1,4 +1,4 @@
-package com.example.personalfinanceapp.presentation.adapter
+package com.example.personalfinanceapp.presentation.fragments.dashboard
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

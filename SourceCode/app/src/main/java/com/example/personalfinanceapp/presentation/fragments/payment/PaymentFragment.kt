@@ -5,14 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.personalfinanceapp.R
 import com.example.personalfinanceapp.databinding.FragmentPaymentBinding
 import com.example.personalfinanceapp.domain.model.category.BillsCategory
 import com.example.personalfinanceapp.domain.model.category.Category
 import com.example.personalfinanceapp.domain.model.category.Type.*
-import com.example.personalfinanceapp.presentation.adapter.CategoryListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

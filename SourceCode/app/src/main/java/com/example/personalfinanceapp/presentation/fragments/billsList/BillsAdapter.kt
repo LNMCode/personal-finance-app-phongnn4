@@ -1,4 +1,4 @@
-package com.example.personalfinanceapp.presentation.adapter
+package com.example.personalfinanceapp.presentation.fragments.billsList
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

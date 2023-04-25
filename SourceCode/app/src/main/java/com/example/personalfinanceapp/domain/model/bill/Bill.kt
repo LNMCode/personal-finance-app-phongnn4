@@ -8,7 +8,7 @@ import kotlinx.parcelize.RawValue
 
 @Parcelize
 data class Bill(
-    val id: Int,
+    val id: String,
     val category: @RawValue Category,
     val cost: Long,
     val note: String

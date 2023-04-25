@@ -13,7 +13,6 @@ import com.example.personalfinanceapp.domain.model.bill.Bill
 import com.example.personalfinanceapp.domain.model.bill.DailyBill
 import com.example.personalfinanceapp.domain.model.category.BillsCategory
 import com.example.personalfinanceapp.domain.model.category.Type.*
-import com.example.personalfinanceapp.presentation.adapter.DailyBillRcvAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.util.ArrayList
@@ -33,6 +32,7 @@ class ExpensesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerViewBills()
+        navToFragments()
     }
 
     private fun initRecyclerViewBills() {
@@ -57,64 +57,64 @@ class ExpensesFragment : Fragment() {
 
     private fun getDailyBillLists(): List<DailyBill> {
         val billList1 = arrayListOf(
-            Bill(1, BillsCategory.getDefaultType(RENTING_HOUSE), 10000, "April rent"),
-            Bill(2, BillsCategory.getDefaultType(ELECTRIC), 5000, "Electricity bill"),
+            Bill("1", BillsCategory.getDefaultType(RENTING_HOUSE), 10000, "April rent"),
+            Bill("2", BillsCategory.getDefaultType(ELECTRIC), 5000, "Electricity bill"),
             Bill(
-                3,
+                "3",
                 BillsCategory.getDefaultType(FOOD),
                 2000,
                 "Weekly grocery shopping"
             )
         )
-        val dailyBillList1 = DailyBill(1, LocalDate.of(2023, 4, 17), billList1, 0)
+        val dailyBillList1 = DailyBill("1", LocalDate.of(2023, 4, 17), billList1, 0)
 
         val billList2 = arrayListOf<Bill>(
             Bill(
-                4,
+                "4",
                 BillsCategory.getDefaultType(TRANSPORT),
                 1500,
                 "Metro card refill"
             ),
-            Bill(5, BillsCategory.getDefaultType(WATER), 3000, "Water bill"),
-            Bill(6, BillsCategory.getDefaultType(ENTERTAINMENT), 2000, "Movie tickets")
+            Bill("5", BillsCategory.getDefaultType(WATER), 3000, "Water bill"),
+            Bill("6", BillsCategory.getDefaultType(ENTERTAINMENT), 2000, "Movie tickets")
         )
-        val dailyBillList2 = DailyBill(2, LocalDate.of(2023, 4, 16), billList2, 0)
+        val dailyBillList2 = DailyBill("2", LocalDate.of(2023, 4, 16), billList2, 0)
 
         val billList3 = arrayListOf<Bill>(
             Bill(
-                7,
+                "7",
                 BillsCategory.getDefaultType(FOOD),
                 3500,
                 "Monthly grocery shopping"
             ),
-            Bill(8, BillsCategory.getDefaultType(GAS), 4000, "Gas bill"),
+            Bill("8", BillsCategory.getDefaultType(GAS), 4000, "Gas bill"),
             Bill(
-                9,
+                "9",
                 BillsCategory.getDefaultType(OTHER),
                 1000,
                 "Birthday gift for a friend"
             )
         )
-        val dailyBillList3 = DailyBill(3, LocalDate.of(2023, 4, 15), billList3, 0)
+        val dailyBillList3 = DailyBill("3", LocalDate.of(2023, 4, 15), billList3, 0)
 
         val billList4 = arrayListOf<Bill>(
-            Bill(10, BillsCategory.getDefaultType(RENTING_HOUSE), 10000, "April rent"),
-            Bill(11, BillsCategory.getDefaultType(ELECTRIC), 6000, "Electricity bill"),
-            Bill(12, BillsCategory.getDefaultType(TRANSPORT), 3000, "Gas refill")
+            Bill("10", BillsCategory.getDefaultType(RENTING_HOUSE), 10000, "April rent"),
+            Bill("11", BillsCategory.getDefaultType(ELECTRIC), 6000, "Electricity bill"),
+            Bill("12", BillsCategory.getDefaultType(TRANSPORT), 3000, "Gas refill")
         )
-        val dailyBillList4 = DailyBill(4, LocalDate.of(2023, 4, 14), billList4, 0)
+        val dailyBillList4 = DailyBill("4", LocalDate.of(2023, 4, 14), billList4, 0)
 
         val billList5 = arrayListOf<Bill>(
-            Bill(13, BillsCategory.getDefaultType(TV), 4000, "Concert tickets"),
+            Bill("13", BillsCategory.getDefaultType(TV), 4000, "Concert tickets"),
             Bill(
-                14,
+                "14",
                 BillsCategory.getDefaultType(FOOD),
                 2500,
                 "Weekly grocery shopping"
             ),
-            Bill(15, BillsCategory.getDefaultType(ENTERTAINMENT), 1500, "Online shopping")
+            Bill("15", BillsCategory.getDefaultType(ENTERTAINMENT), 1500, "Online shopping")
         )
-        val dailyBillList5 = DailyBill(5, LocalDate.of(2023, 4, 13), billList5, 0)
+        val dailyBillList5 = DailyBill("5", LocalDate.of(2023, 4, 13), billList5, 0)
 
         // Printing the list of daily bill lists
         return listOf(
@@ -125,11 +125,11 @@ class ExpensesFragment : Fragment() {
             dailyBillList5
         )
     }
-/*
+
     private fun navToFragments() {
         binding.apply {
 
-            imgBack.setOnClickListener {
+            binding.imgBack.setOnClickListener {
                 findNavController().navigate(R.id.action_homeFragment_to_dashBoardFragment)
             }
 
@@ -139,32 +139,8 @@ class ExpensesFragment : Fragment() {
 
             btnAddIncome.setOnClickListener {
                 findNavController().navigate(R.id.action_homeFragment_to_paymentFragment)
-            }
 
-            bottomNavBar.setOnItemSelectedListener { item ->
-                when (item.itemId) {
-                    R.id.btn_nav_account -> {
-                        findNavController().navigate(R.id.action_homeFragment_to_kycFragment)
-                        true
-                    }
-                    R.id.btn_nav_home -> {
-                        findNavController().navigate(R.id.action_homeFragment_to_dashBoardFragment)
-                        true
-                    }
-                    R.id.btn_nav_add -> {
-                        findNavController().navigate(R.id.action_homeFragment_to_paymentFragment)
-                        true
-                    }
-                    else -> {
-                        item.isChecked = true
-                        false
-                    }
-                }
             }
         }
-    }*/
-
-    override fun onStart() {
-        super.onStart()
     }
 }
