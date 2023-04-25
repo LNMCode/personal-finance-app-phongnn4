@@ -14,6 +14,16 @@ class UserUseCaseImpl @Inject constructor(
         userRepository.createUser(userId)
     }
 
+    override suspend fun updateUser(
+        userId: String,
+        DOB: String,
+        address: String,
+        name: String,
+        mobile: String
+    ) = handleFlow {
+        userRepository.updateUser(userId, DOB, address, name, mobile)
+    }
+
     override suspend fun getUserIdCurrent() = handleFlow {
         userRepository.getUserIdCurrent()
     }

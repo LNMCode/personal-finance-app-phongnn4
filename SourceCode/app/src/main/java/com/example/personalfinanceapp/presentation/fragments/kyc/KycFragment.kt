@@ -41,12 +41,19 @@ class KycFragment : Fragment() {
         backToDashBoardFragment()
         logout()
         registerLogoutEvent()
+        registerFetchUser()
         setDateInput()
         navToHomeFragment(binding.btnSubmit)
     }
 
-    override fun onStart() {
-        super.onStart()
+    private fun registerFetchUser() {
+        kycViewModel.userModelLiveData.observe(viewLifecycleOwner) {
+            binding.edtAddressInput.setText(it.address)
+            binding.edtPhoneInput.setText(it.mobile)
+            binding.edtNameInput.setText(it.name)
+            binding.edtAccountIdInput.setText(it.id)
+            binding.edtDateOfBirthInput.setText(it.DOB)
+        }
     }
 
     private fun navToHomeFragment(btnSubmit: MaterialButton) {
@@ -55,6 +62,7 @@ class KycFragment : Fragment() {
                 .setTitle("Submit")
                 .setMessage("Are you sure that you want to submit?")
                 .setPositiveButton("Yes") { _, _ ->
+                    handleUpdateInformation()
                     Toast.makeText(requireContext(), "Submitted!", Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_kycFragment_to_dashBoardFragment)
                 }
@@ -64,9 +72,15 @@ class KycFragment : Fragment() {
                 .create()
                 .show()
         }
-
     }
 
+    private fun handleUpdateInformation() {
+        val name = binding.edtNameInput.text.toString()
+        val mobile = binding.edtPhoneInput.text.toString()
+        val DOB = binding.edtDateOfBirthInput.text.toString()
+        val address = binding.edtAddressInput.text.toString()
+        kycViewModel.updateUser(name, mobile, DOB, address)
+    }
 
     private fun setDateInput() {
         binding.edtDateOfBirthInput.setOnClickListener {

@@ -33,6 +33,29 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun updateUser(
+        userId: String,
+        DOB: String,
+        address: String,
+        name: String,
+        mobile: String
+    ) = flow {
+        try {
+            val data = hashMapOf(
+                Constants.FIELD_DOB to DOB,
+                Constants.FIELD_ADDRESS to address,
+                Constants.FIELD_NAME to name,
+                Constants.FIELD_MOBILE to mobile,
+            )
+            db.collection(Constants.COLLECTION_USER).document(userId)
+                .update(data as Map<String, Any>).await()
+
+            emit(true)
+        } catch (e: Exception) {
+            emit(false)
+        }
+    }
+
     override suspend fun getUserIdCurrent() = flow {
         try {
             val userId = firebaseAuth.currentUser?.uid
