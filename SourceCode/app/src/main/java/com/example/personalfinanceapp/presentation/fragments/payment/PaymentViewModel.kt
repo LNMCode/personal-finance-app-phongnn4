@@ -10,10 +10,8 @@ import com.example.personalfinanceapp.domain.model.UserModel
 import com.example.personalfinanceapp.domain.model.bill.Bill
 import com.example.personalfinanceapp.domain.model.bill.DailyBill
 import com.example.personalfinanceapp.domain.model.category.Category
-import com.example.personalfinanceapp.domain.usecases.accuracy.AccuracyUseCase
 import com.example.personalfinanceapp.domain.usecases.user.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @HiltViewModel
@@ -53,7 +51,12 @@ class PaymentViewModel @Inject constructor(
         }
     }
 
-    private fun handleAddBill(context: Context, amount: String, notes: String, category: Category?) {
+    private fun handleAddBill(
+        context: Context,
+        amount: String,
+        notes: String,
+        category: Category?
+    ) {
         val idCurrentDate = Constants.getCurrentDateId()
         val idBill = Constants.getIdBillRanDom()
         val userId = userModelLiveData.value!!.id
@@ -62,37 +65,82 @@ class PaymentViewModel @Inject constructor(
 
         if (dailyBills != null) {
             val dailyBill = dailyBills.find { it.id == idCurrentDate }
-            dailyBills.remove(dailyBill)
+            if (dailyBill != null) {
+                dailyBills.remove(dailyBill)
 
-            val bills = dailyBill!!.bills
-            bills!!.add(Bill(idBill, category!!.categoryName, amount.toLong(), notes))
+                val bills = dailyBill.bills
+                bills!!.add(Bill(idBill, category!!.categoryName, amount.toLong(), notes))
 
-            dailyBills.add(dailyBill)
-            requestFlow {
-                userUseCase.addBill(userId!!, dailyBills).collect {
-                    handleMinusMoney(context, userId, money, amount)
+                dailyBills.add(dailyBill)
+                requestFlow {
+                    userUseCase.addBill(userId!!, dailyBills).collect {
+                        handleMinusMoney(context, userId, money, amount)
+                    }
                 }
+            } else {
+                handleAddNewBill(
+                    context,
+                    amount,
+                    notes,
+                    category,
+                    idCurrentDate,
+                    idBill,
+                    userId,
+                    money,
+                    true
+                )
             }
         } else {
-            val haha = listOf(
-                DailyBill(
-                    idCurrentDate, idCurrentDate,
-                    arrayListOf(
-                        Bill(idBill, category!!.categoryName, amount.toLong(), notes)
-                    ),
-                )
+            handleAddNewBill(
+                context,
+                amount,
+                notes,
+                category,
+                idCurrentDate,
+                idBill,
+                userId,
+                money,
+                false
             )
-            requestFlow {
-                userUseCase.addBill(
-                    userId!!, haha
-                ).collect {
-                    handleMinusMoney(context, userId, money, amount)
-                }
+        }
+    }
+
+    private fun handleAddNewBill(
+        context: Context,
+        amount: String,
+        notes: String,
+        category: Category?,
+        idCurrentDate: String,
+        idBill: String,
+        userId: String?,
+        money: String,
+        isMergeNew: Boolean,
+    ) {
+        val billListResult = arrayListOf<DailyBill>()
+        val billListNewDate = DailyBill(
+            idCurrentDate, idCurrentDate,
+            arrayListOf(Bill(idBill, category!!.categoryName, amount.toLong(), notes))
+        )
+        if (isMergeNew) {
+            val dailyBills = userModelLiveData.value!!.dailyBills
+            billListResult.addAll(dailyBills!!)
+        }
+        billListResult.add(billListNewDate)
+        requestFlow {
+            userUseCase.addBill(
+                userId!!, billListResult
+            ).collect {
+                handleMinusMoney(context, userId, money, amount)
             }
         }
     }
 
-    private fun handleMinusMoney(context: Context, userId: String, moneyOrigin: String, moneyMinus: String) {
+    private fun handleMinusMoney(
+        context: Context,
+        userId: String,
+        moneyOrigin: String,
+        moneyMinus: String
+    ) {
         requestFlow {
             userUseCase.minusMoney(userId, moneyOrigin.toLong(), moneyMinus.toLong()).collect {
                 Toast.makeText(context, "Done!!!", Toast.LENGTH_SHORT).show()
