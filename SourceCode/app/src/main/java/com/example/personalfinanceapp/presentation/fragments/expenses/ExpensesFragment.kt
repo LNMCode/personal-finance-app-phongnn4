@@ -39,18 +39,15 @@ class ExpensesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         fetchUserInformation()
         observerUserInformation()
-        initRecyclerViewBills()
         navToFragments()
     }
 
-    private fun initRecyclerViewBills() {
-        val recyclerView = binding.rcvRecentBills
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val adapter = DailyBillRcvAdapter(getDailyBillLists()) { selectedItem ->
-
+    private fun initRecyclerViewBills(dailyBill: List<DailyBill>) {
+        binding.rcvRecentBills.layoutManager = LinearLayoutManager(requireContext())
+        val adapter = DailyBillRcvAdapter(dailyBill) { selectedItem ->
             val billList: ArrayList<Bill> = selectedItem.bills!!
             val billTime = selectedItem.date
-            val billTotal = "Total: $${selectedItem}"
+            val billTotal = "Total: ${billList.sumOf { it.cost!! }}"
 
             val bundle = Bundle().apply {
                 putParcelableArrayList("billList", billList)
@@ -59,13 +56,7 @@ class ExpensesFragment : Fragment() {
             }
             findNavController().navigate(R.id.action_homeFragment_to_billsListFragment, bundle)
         }
-        recyclerView.adapter = adapter
-    }
-
-    private fun getDailyBillLists(): List<DailyBill> {
-
-        return listOf(
-        )
+        binding.rcvRecentBills.adapter = adapter
     }
 
     private fun navToFragments() {
@@ -96,6 +87,7 @@ class ExpensesFragment : Fragment() {
             binding.tvBalanceMoney.text = "$${it.money.toString()}"
             it.dailyBills?.let { dailyBill ->
                 setUpRecycleViewRecentBills(dailyBill)
+                initRecyclerViewBills(dailyBill)
             }
         }
     }
