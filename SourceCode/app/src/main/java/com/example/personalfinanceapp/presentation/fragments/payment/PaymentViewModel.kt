@@ -1,5 +1,7 @@
 package com.example.personalfinanceapp.presentation.fragments.payment
 
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.personalfinanceapp.base.BaseViewModel
@@ -39,40 +41,61 @@ class PaymentViewModel @Inject constructor(
         }
     }
 
-    fun addBill(amount: String, notes: String) {
+    fun addBill(context: Context, amount: String, notes: String) {
         val category = categorySelected.value
         if (userModelLiveData.value != null) {
-            val idCurrentDate = Constants.getCurrentDateId()
-            val idBill = Constants.getIdBillRanDom()
-            val userId = userModelLiveData.value!!.id
-            val dailyBills = userModelLiveData.value!!.dailyBills
-
-            if (dailyBills != null) {
-                val dailyBill = dailyBills.find { it.id == idCurrentDate }
-                dailyBills.remove(dailyBill)
-
-                val bills = dailyBill!!.bills
-                bills!!.add(Bill(idBill, category!!.categoryName, amount.toLong(), notes))
-                dailyBill.bills!!.clear()
-                dailyBill.bills!!.addAll(bills)
-                dailyBills.add(dailyBill)
-                requestFlow {
-                    userUseCase.addBill(userId!!, dailyBills)
-                }
+            val money = userModelLiveData.value!!.money
+            if (money != null && money >= amount.toLong()) {
+                handleAddBill(context, amount, notes, category)
             } else {
-                val haha = listOf(
-                    DailyBill(
-                        idCurrentDate, idCurrentDate,
-                        arrayListOf(
-                            Bill(idBill, category!!.categoryName, amount.toLong(), notes)
-                        ),
-                    )
-                )
-                requestFlow {
-                    userUseCase.addBill(
-                        userId!!, haha
-                    )
+                Toast.makeText(context, "You don't have enough money", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun handleAddBill(context: Context, amount: String, notes: String, category: Category?) {
+        val idCurrentDate = Constants.getCurrentDateId()
+        val idBill = Constants.getIdBillRanDom()
+        val userId = userModelLiveData.value!!.id
+        val dailyBills = userModelLiveData.value!!.dailyBills
+        val money = userModelLiveData.value!!.money.toString()
+
+        if (dailyBills != null) {
+            val dailyBill = dailyBills.find { it.id == idCurrentDate }
+            dailyBills.remove(dailyBill)
+
+            val bills = dailyBill!!.bills
+            bills!!.add(Bill(idBill, category!!.categoryName, amount.toLong(), notes))
+
+            dailyBills.add(dailyBill)
+            requestFlow {
+                userUseCase.addBill(userId!!, dailyBills).collect {
+                    handleMinusMoney(context, userId, money, amount)
                 }
+            }
+        } else {
+            val haha = listOf(
+                DailyBill(
+                    idCurrentDate, idCurrentDate,
+                    arrayListOf(
+                        Bill(idBill, category!!.categoryName, amount.toLong(), notes)
+                    ),
+                )
+            )
+            requestFlow {
+                userUseCase.addBill(
+                    userId!!, haha
+                ).collect {
+                    handleMinusMoney(context, userId, money, amount)
+                }
+            }
+        }
+    }
+
+    private fun handleMinusMoney(context: Context, userId: String, moneyOrigin: String, moneyMinus: String) {
+        requestFlow {
+            userUseCase.minusMoney(userId, moneyOrigin.toLong(), moneyMinus.toLong()).collect {
+                Toast.makeText(context, "Done!!!", Toast.LENGTH_SHORT).show()
             }
         }
     }

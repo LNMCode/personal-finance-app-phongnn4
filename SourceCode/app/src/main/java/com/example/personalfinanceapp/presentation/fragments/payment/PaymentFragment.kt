@@ -50,7 +50,7 @@ class PaymentFragment : Fragment(), OnCategoryListClicked {
     private fun handleAddBill() {
         val amount = binding.edtEnterAmount.text.toString()
         val notes = binding.edtAddNote.text.toString()
-        paymentViewModel.addBill(amount, notes)
+        paymentViewModel.addBill(requireContext(), amount, notes)
     }
 
     private fun createCategoriesList(): MutableList<Category> {

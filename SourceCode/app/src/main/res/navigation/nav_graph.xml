@@ -97,6 +97,9 @@
         <action
             android:id="@+id/action_homeFragment_to_billsListFragment"
             app:destination="@id/billsListFragment" />
+        <action
+            android:id="@+id/action_expensesFragment_to_incomeFragment"
+            app:destination="@id/incomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/billsListFragment"
@@ -106,4 +109,8 @@
             android:id="@+id/action_billsListFragment_to_homeFragment"
             app:destination="@id/expensesFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/incomeFragment"
+        android:name="com.example.personalfinanceapp.presentation.fragments.income.IncomeFragment"
+        android:label="IncomeFragment" />
 </navigation>

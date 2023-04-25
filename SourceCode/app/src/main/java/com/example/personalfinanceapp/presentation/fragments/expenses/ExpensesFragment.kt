@@ -80,7 +80,7 @@ class ExpensesFragment : Fragment() {
             }
 
             btnAddIncome.setOnClickListener {
-                findNavController().navigate(R.id.action_homeFragment_to_paymentFragment)
+                findNavController().navigate(R.id.action_expensesFragment_to_incomeFragment)
 
             }
         }

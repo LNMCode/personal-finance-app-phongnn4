@@ -61,4 +61,35 @@ class UserRepositoryImpl @Inject constructor(
             emit(false)
         }
     }
+
+    override suspend fun addIncome(userId: String, income: Long) = flow {
+        try {
+            val data = hashMapOf(
+                Constants.FIELD_MONEY to income
+            )
+            db.collection(Constants.COLLECTION_USER)
+                .document(userId).update(data as Map<String, Any>).await()
+            emit(true)
+        } catch (e: Exception) {
+            emit(false)
+        }
+    }
+
+    override suspend fun minusMoney(
+        userId: String,
+        moneyOrigin: Long,
+        moneyMinus: Long
+    ) = flow {
+        try {
+            val data = hashMapOf(
+                Constants.FIELD_MONEY to moneyOrigin - moneyMinus
+            )
+            db.collection(Constants.COLLECTION_USER)
+                .document(userId).update(data as Map<String, Any>).await()
+            emit(true)
+        } catch (e: Exception) {
+            emit(false)
+        }
+    }
+
 }
