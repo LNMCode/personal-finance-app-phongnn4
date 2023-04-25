@@ -5,5 +5,5 @@ import java.time.LocalDate
 
 data class RecentBillsItemModel(
     var bill: Bill,
-    var date: LocalDate,
+    var date: String,
 )

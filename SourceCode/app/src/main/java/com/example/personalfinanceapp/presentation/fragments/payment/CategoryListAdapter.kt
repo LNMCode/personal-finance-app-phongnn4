@@ -10,6 +10,7 @@ import com.example.personalfinanceapp.domain.model.category.Category
 
 class CategoryListAdapter(
     private val categoryList: MutableList<Category>,
+    private val clicked: OnCategoryListClicked,
 ) :
     RecyclerView.Adapter<CategoryListAdapter.CategoryViewModel>() {
 
@@ -20,7 +21,7 @@ class CategoryListAdapter(
         val binding =
             ItemShowCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        return CategoryViewModel(binding)
+        return CategoryViewModel(binding, clicked)
     }
 
     override fun onBindViewHolder(holder: CategoryViewModel, position: Int) {
@@ -32,7 +33,7 @@ class CategoryListAdapter(
         return categoryList.size
     }
 
-    inner class CategoryViewModel(private val itemBinding: ItemShowCategoryBinding) :
+    inner class CategoryViewModel(private val itemBinding: ItemShowCategoryBinding, list: OnCategoryListClicked) :
         RecyclerView.ViewHolder(itemBinding.root) {
 
         @SuppressLint("SetTextI18n")
@@ -46,6 +47,7 @@ class CategoryListAdapter(
                     if (selectedPosition != position) {
                         notifyItemChanged(selectedPosition)
                         selectedPosition = position
+                        clicked.onItemClicked(category)
                         notifyItemChanged(position)
                     } else {
                         selectedPosition = -1

@@ -31,7 +31,7 @@ class DashBoardRecentBillAdapter(
     inner class DailyBillsViewHolder(private var binding: ItemRecentBillDashboardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(bill: Bill, date: LocalDate?) {
+        fun bind(bill: Bill, date: String?) {
             binding.textView3.text = bill.category
             binding.textView2.text = date.toString()
             binding.textView4.text = bill.cost.toString()

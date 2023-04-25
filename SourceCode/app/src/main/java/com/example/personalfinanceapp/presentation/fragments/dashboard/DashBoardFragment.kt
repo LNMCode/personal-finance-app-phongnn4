@@ -39,11 +39,13 @@ class DashBoardFragment : Fragment() {
     private fun setUpRecycleViewRecentBills(dailyBill: List<DailyBill>) {
         val recentBillsModel = arrayListOf<RecentBillsItemModel>()
         dailyBill.forEach { dBill ->
-            dBill.bills.forEach { bill ->
+            dBill.bills!!.forEach { bill ->
                 recentBillsModel.add(RecentBillsItemModel(bill, dBill.date!!))
             }
         }
         val adapter = DashBoardRecentBillAdapter(recentBillsModel)
+        binding.rcvRecentBills.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.rcvRecentBills.adapter = adapter
     }
 

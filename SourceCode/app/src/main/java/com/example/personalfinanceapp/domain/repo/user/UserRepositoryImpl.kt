@@ -2,8 +2,11 @@ package com.example.personalfinanceapp.domain.repo.user
 
 import com.example.personalfinanceapp.constants.Constants
 import com.example.personalfinanceapp.domain.model.UserModel
+import com.example.personalfinanceapp.domain.model.bill.Bill
+import com.example.personalfinanceapp.domain.model.bill.DailyBill
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -44,5 +47,18 @@ class UserRepositoryImpl @Inject constructor(
             .document(userId).get().await()
         val userModel = result.toObject(UserModel::class.java)
         emit(userModel!!)
+    }
+
+    override suspend fun addBill(userId: String, dailyBills: List<DailyBill>) = flow {
+        try {
+            val data = hashMapOf(
+                Constants.FIELD_DAILY_BILLS to dailyBills
+            )
+            db.collection(Constants.COLLECTION_USER)
+                .document(userId).update(data as Map<String, Any>).await()
+            emit(true)
+        } catch (e: Exception) {
+            emit(false)
+        }
     }
 }

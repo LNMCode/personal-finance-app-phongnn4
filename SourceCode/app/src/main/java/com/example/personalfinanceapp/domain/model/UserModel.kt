@@ -9,7 +9,7 @@ data class UserModel(
     var mobile: String? = null,
     var money: Long? = null,
     var name: String? = null,
-    var dailyBills: List<DailyBill>? = null,
+    var dailyBills: ArrayList<DailyBill>? = null,
     var creditLimit: CreditLimit? = null,
 ) {
 

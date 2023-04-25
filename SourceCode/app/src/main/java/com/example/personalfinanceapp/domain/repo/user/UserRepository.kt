@@ -1,6 +1,8 @@
 package com.example.personalfinanceapp.domain.repo.user
 
 import com.example.personalfinanceapp.domain.model.UserModel
+import com.example.personalfinanceapp.domain.model.bill.Bill
+import com.example.personalfinanceapp.domain.model.bill.DailyBill
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
@@ -9,5 +11,7 @@ interface UserRepository {
     suspend fun getUserIdCurrent() : Flow<String>
 
     suspend fun fetchUserInformation(userId: String) : Flow<UserModel>
+
+    suspend fun addBill(userId: String, dailyBills: List<DailyBill>): Flow<Boolean>
 
 }

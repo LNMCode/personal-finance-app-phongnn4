@@ -31,7 +31,7 @@ class BillsAdapter(private val billList: List<Bill>) :
         fun bind(bill: Bill) {
             with(itemBinding) {
                 imvExpenseTypeIcon.setImageResource(
-                    BillsCategory.getCategoryIconByName(bill.category)!!.symbol
+                    BillsCategory.getCategoryIconByName(bill.category!!)!!.symbol
                 )
                 tvCategoryName.text = bill.category
                 tvNote.text = bill.note

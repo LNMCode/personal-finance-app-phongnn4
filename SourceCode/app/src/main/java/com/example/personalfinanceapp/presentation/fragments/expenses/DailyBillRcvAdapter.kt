@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.personalfinanceapp.databinding.HeaderDesignBinding
 import com.example.personalfinanceapp.domain.model.bill.DailyBill
+import com.example.personalfinanceapp.extensions.StringExtension.toLocalDate
 
 class DailyBillRcvAdapter(
     private val dailyBillList: List<DailyBill>,
@@ -30,11 +31,12 @@ class DailyBillRcvAdapter(
 
         fun bind(billList: DailyBill) {
             with(binding) {
-                tvDate.text = billList.date!!.dayOfMonth.toString()
-                tvDaysOfTheWeek.text = billList.date!!.dayOfWeek.toString()
+                val localDate = billList.date!!.toLocalDate()
+                tvDate.text = localDate.dayOfMonth.toString()
+                tvDaysOfTheWeek.text = localDate.toString()
                 tvMonthAndYear.text =
-                    billList.date!!.month.toString() + " " + billList.date!!.year.toString()
-                tvTotalMoney.text = "$" + billList.amount
+                    localDate.month.toString() + " " + localDate.year.toString()
+                tvTotalMoney.text = "$" + billList.bills!!.sumOf { it.cost!!.toLong() }
                 clHeader.setOnClickListener {
                     listener(billList)
                 }

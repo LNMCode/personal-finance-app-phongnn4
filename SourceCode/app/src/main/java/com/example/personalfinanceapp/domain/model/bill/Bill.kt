@@ -9,10 +9,9 @@ import java.time.LocalDate
 
 @Parcelize
 data class Bill(
-    val id: String,
-    val category: String,
-    val cost: Long,
-    val note: String,
-    val date: LocalDate,
+    val id: String? = null,
+    val category: String? = null,
+    val cost: Long? = null,
+    val note: String? = null,
 ) : Parcelable
 

@@ -2,8 +2,10 @@ package com.example.personalfinanceapp.constants
 
 import android.content.Context
 import android.content.Intent
+import com.example.personalfinanceapp.extensions.DateTimeExtensions.toFormat
 import com.example.personalfinanceapp.presentation.activities.MainActivity
 import com.example.personalfinanceapp.presentation.activities.SignInUpActivity
+import java.time.LocalDate
 
 
 interface Constants {
@@ -33,6 +35,16 @@ interface Constants {
             val intent = Intent(context, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             context.startActivity(intent)
+        }
+
+        fun getCurrentDateId(): String {
+            return LocalDate.now().toFormat()
+        }
+
+        fun getIdBillRanDom(): String {
+            val rand = listOf(('0'..'9'), ('a'..'z'),
+                ('A'..'Z')).flatten().random()
+            return getCurrentDateId() + rand
         }
     }
 }

@@ -48,10 +48,9 @@ class ExpensesFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         val adapter = DailyBillRcvAdapter(getDailyBillLists()) { selectedItem ->
 
-            val billList: ArrayList<Bill> = selectedItem.bills
-            val billTime =
-                "${selectedItem.date!!.dayOfWeek}, ${selectedItem.date!!.month} ${selectedItem.date!!.dayOfMonth}, ${selectedItem.date!!.year}"
-            val billTotal = "Total: $${selectedItem.amount}"
+            val billList: ArrayList<Bill> = selectedItem.bills!!
+            val billTime = selectedItem.date
+            val billTotal = "Total: $${selectedItem}"
 
             val bundle = Bundle().apply {
                 putParcelableArrayList("billList", billList)
@@ -104,7 +103,7 @@ class ExpensesFragment : Fragment() {
     private fun setUpRecycleViewRecentBills(dailyBill: List<DailyBill>) {
         val recentBillsModel = arrayListOf<RecentBillsItemModel>()
         dailyBill.forEach { dBill ->
-            dBill.bills.forEach { bill ->
+            dBill.bills!!.forEach { bill ->
                 recentBillsModel.add(RecentBillsItemModel(bill, dBill.date!!))
             }
         }
