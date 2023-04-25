@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.personalfinanceapp.databinding.ItemShowCategoryBinding
-import com.example.personalfinanceapp.entities.category.Category
+import com.example.personalfinanceapp.domain.model.category.Category
 
 class CategoryListAdapter(
     private val categoryList: MutableList<Category>,

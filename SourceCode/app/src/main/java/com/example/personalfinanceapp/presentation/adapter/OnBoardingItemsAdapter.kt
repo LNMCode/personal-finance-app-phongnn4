@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.personalfinanceapp.databinding.OnboardingItemContainerBinding
-import com.example.personalfinanceapp.entities.OnBoardingItem
+import com.example.personalfinanceapp.domain.model.OnBoardingItem
 
 class OnBoardingItemsAdapter(private val onBoardingItems: List<OnBoardingItem>) :
     RecyclerView.Adapter<OnBoardingItemsAdapter.OnBoardingItemViewHolder>() {

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.personalfinanceapp.presentation.SplashFragment"
+        android:name="com.example.personalfinanceapp.presentation.fragments.splash.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/welcomeFragment01"
-        android:name="com.example.personalfinanceapp.presentation.WelcomeFragment01"
+        android:name="com.example.personalfinanceapp.presentation.fragments.welcome.WelcomeFragment01"
         android:label="fragment_welcome01"
         tools:layout="@layout/fragment_welcome01" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.personalfinanceapp.presentation.LoginFragment"
+        android:name="com.example.personalfinanceapp.presentation.fragments.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.example.personalfinanceapp.presentation.SignUpFragment"
+        android:name="com.example.personalfinanceapp.presentation.fragments.signUp.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/dashBoardFragment"
-        android:name="com.example.personalfinanceapp.presentation.DashBoardFragment"
+        android:name="com.example.personalfinanceapp.presentation.fragments.dashboard.DashBoardFragment"
         android:label="fragment_dash_board"
         tools:layout="@layout/fragment_dash_board" >
         <action
@@ -70,7 +70,7 @@
     </fragment>
     <fragment
         android:id="@+id/kycFragment"
-        android:name="com.example.personalfinanceapp.presentation.KycFragment"
+        android:name="com.example.personalfinanceapp.presentation.fragments.kyc.KycFragment"
         android:label="fragment_kyc"
         tools:layout="@layout/fragment_kyc" >
         <action
@@ -88,7 +88,7 @@
     </fragment>
     <fragment
         android:id="@+id/budgetFragment"
-        android:name="com.example.personalfinanceapp.presentation.BudgetFragment"
+        android:name="com.example.personalfinanceapp.presentation.fragments.buget.BudgetFragment"
         android:label="fragment_budget"
         tools:layout="@layout/fragment_budget" >
         <action
@@ -97,7 +97,7 @@
     </fragment>
     <fragment
         android:id="@+id/paymentFragment"
-        android:name="com.example.personalfinanceapp.presentation.PaymentFragment"
+        android:name="com.example.personalfinanceapp.presentation.fragments.payment.PaymentFragment"
         android:label="fragment_payment"
         tools:layout="@layout/fragment_payment" >
         <action
@@ -118,7 +118,7 @@
     </fragment>
     <fragment
         android:id="@+id/reportFragment"
-        android:name="com.example.personalfinanceapp.presentation.ReportFragment"
+        android:name="com.example.personalfinanceapp.presentation.fragments.report.ReportFragment"
         android:label="fragment_report"
         tools:layout="@layout/fragment_report" >
         <action
@@ -127,7 +127,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.personalfinanceapp.presentation.ExpensesFragment"
+        android:name="com.example.personalfinanceapp.presentation.fragments.expenses.ExpensesFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_expenses" >
         <action
@@ -148,7 +148,7 @@
     </fragment>
     <fragment
         android:id="@+id/billsListFragment"
-        android:name="com.example.personalfinanceapp.presentation.BillsListFragment"
+        android:name="com.example.personalfinanceapp.presentation.fragments.billsList.BillsListFragment"
         android:label="BillsListFragment" >
         <action
             android:id="@+id/action_billsListFragment_to_homeFragment"

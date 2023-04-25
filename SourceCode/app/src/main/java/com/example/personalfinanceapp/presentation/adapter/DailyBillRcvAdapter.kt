@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.personalfinanceapp.databinding.HeaderDesignBinding
-import com.example.personalfinanceapp.entities.bill.DailyBill
+import com.example.personalfinanceapp.domain.model.bill.DailyBill
 
 class DailyBillRcvAdapter(
     private val dailyBillList: List<DailyBill>,

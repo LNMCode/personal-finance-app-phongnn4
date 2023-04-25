@@ -2,11 +2,9 @@ package com.example.personalfinanceapp.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.personalfinanceapp.R
 import com.example.personalfinanceapp.databinding.ScrollingMenuItemBinding
-import com.example.personalfinanceapp.entities.FinancialFunction
+import com.example.personalfinanceapp.domain.model.FinancialFunction
 
 class ScrollingHorizontalMenuAdapter(
     private val financialFunctionList: List<FinancialFunction>,

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.personalfinanceapp.databinding.ItemDesignBinding
-import com.example.personalfinanceapp.entities.bill.Bill
+import com.example.personalfinanceapp.domain.model.bill.Bill
 
 class BillsAdapter(private val billList: List<Bill>) : RecyclerView.Adapter<BillsAdapter.BillViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BillViewHolder {
