@@ -57,7 +57,7 @@ class DashBoardFragment : Fragment() {
                 recentBillsModel.add(RecentBillsItemModel(bill, dBill.date!!))
             }
         }
-        adapter.add(recentBillsModel)
+        binding.rcvRecentBills.adapter = DashBoardRecentBillAdapter(recentBillsModel)
     }
 
     private fun initRecycleView() {

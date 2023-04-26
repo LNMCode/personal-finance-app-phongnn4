@@ -8,9 +8,16 @@ import com.example.personalfinanceapp.domain.model.bill.DailyBill
 import com.example.personalfinanceapp.extensions.StringExtension.toLocalDate
 
 class DailyBillRcvAdapter(
-    private val dailyBillList: List<DailyBill>,
+    private val dailyBillList: ArrayList<DailyBill>,
     private val listener: (DailyBill) -> Unit,
 ) : RecyclerView.Adapter<DailyBillRcvAdapter.DailyBillsViewHolder>() {
+
+    fun addData(list: List<DailyBill>) {
+        if (dailyBillList.isNotEmpty()) {
+            dailyBillList.clear()
+        }
+        dailyBillList.addAll(list)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DailyBillsViewHolder {
         val binding =
