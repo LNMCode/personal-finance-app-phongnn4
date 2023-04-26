@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.personalfinanceapp.databinding.FragmentPaymentBinding
 import com.example.personalfinanceapp.domain.model.category.BillsCategory
@@ -32,6 +33,7 @@ class PaymentFragment : Fragment(), OnCategoryListClicked {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
+        setUpBackButton()
         setUpAdd()
     }
 
@@ -41,6 +43,10 @@ class PaymentFragment : Fragment(), OnCategoryListClicked {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = CategoryListAdapter(createCategoriesList(), this@PaymentFragment)
         }
+    }
+
+    private fun setUpBackButton() {
+
     }
 
     private fun setUpAdd() {

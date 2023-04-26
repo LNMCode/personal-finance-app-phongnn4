@@ -122,8 +122,6 @@ class KycFragment : Fragment() {
     }
 
     private fun backToDashBoardFragment() {
-        binding.imgBack.setOnClickListener {
-            findNavController().navigate(R.id.action_kycFragment_to_dashBoardFragment)
-        }
+
     }
 }

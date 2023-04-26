@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.personalfinanceapp.R
 import com.example.personalfinanceapp.databinding.FragmentExpensesBinding
 import com.example.personalfinanceapp.databinding.FragmentIncomeBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,6 +30,7 @@ class IncomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        hideBottomNavigation()
         observerIncome()
         setUpAddBtn()
         setUpBackBtn()
@@ -47,6 +49,7 @@ class IncomeFragment : Fragment() {
 
     private fun setUpBackBtn() {
         binding.imgBack.setOnClickListener {
+            showBottomNavigation()
             findNavController().popBackStack()
         }
     }
@@ -54,9 +57,23 @@ class IncomeFragment : Fragment() {
     private fun observerIncome() {
         incomeViewModel.incomeLiveData.observe(viewLifecycleOwner) {
             if (it) {
+                showBottomNavigation()
                 findNavController().popBackStack()
             }
         }
     }
 
+    private fun hideBottomNavigation() {
+        val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_bar)
+        if (bottomNav != null) {
+            bottomNav.visibility = View.GONE
+        }
+    }
+
+    private fun showBottomNavigation() {
+        val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_bar)
+        if (bottomNav != null) {
+            bottomNav.visibility = View.VISIBLE
+        }
+    }
 }

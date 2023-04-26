@@ -21,8 +21,11 @@ class IncomeViewModel @Inject constructor(
     fun addIncome(income: String) {
         requestFlow {
             userUseCase.getUserIdCurrent().collect {
-                userUseCase.addIncome(it, income.toLong()).collect { isDone ->
-                    _incomeLiveData.postValue(isDone)
+                userUseCase.fetchUserInformation(it).collect { userModel ->
+                    val total = income.toLong() + userModel?.money!!
+                    userUseCase.addIncome(it, total).collect { isDone ->
+                        _incomeLiveData.postValue(isDone)
+                    }
                 }
             }
         }

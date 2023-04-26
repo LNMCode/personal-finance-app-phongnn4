@@ -66,15 +66,11 @@ class ExpensesFragment : Fragment() {
     private fun navToFragments() {
         binding.apply {
 
-            binding.imgBack.setOnClickListener {
-                findNavController().navigate(R.id.action_homeFragment_to_dashBoardFragment)
-            }
-
-            btnAddExpense.setOnClickListener {
+            binding.btnAddExpense.setOnClickListener {
                 findNavController().navigate(R.id.action_homeFragment_to_paymentFragment)
             }
 
-            btnAddIncome.setOnClickListener {
+            binding.btnAddIncome.setOnClickListener {
                 findNavController().navigate(R.id.action_expensesFragment_to_incomeFragment)
 
             }

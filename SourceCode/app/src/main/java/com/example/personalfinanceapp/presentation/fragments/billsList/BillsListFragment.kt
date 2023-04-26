@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.personalfinanceapp.R
 import com.example.personalfinanceapp.databinding.FragmentBillsListBinding
 import com.example.personalfinanceapp.domain.model.bill.Bill
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,22 +22,21 @@ class BillsListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-
         binding = FragmentBillsListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        hideBottomNavigation()
         initRecyclerView()
         navToFragments()
     }
 
     private fun navToFragments() {
-        binding.apply {
-            imgBack.setOnClickListener {
-                findNavController().navigate(R.id.action_billsListFragment_to_homeFragment)
-            }
+        binding.imgBack.setOnClickListener {
+            showBottomNavigation()
+            findNavController().popBackStack()
         }
     }
 
@@ -52,4 +52,18 @@ class BillsListFragment : Fragment() {
         recyclerView.adapter = adapter
     }
 
+
+    private fun hideBottomNavigation() {
+        val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_bar)
+        if (bottomNav != null) {
+            bottomNav.visibility = View.GONE
+        }
+    }
+
+    private fun showBottomNavigation() {
+        val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_bar)
+        if (bottomNav != null) {
+            bottomNav.visibility = View.VISIBLE
+        }
+    }
 }
