@@ -25,6 +25,8 @@ class DashBoardFragment : Fragment() {
     private lateinit var binding: FragmentDashBoardBinding
 
     private val dashBoardViewModel: DashBoardViewModel by viewModels()
+
+    private lateinit var adapter : DashBoardRecentBillAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -37,7 +39,15 @@ class DashBoardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initRecycleView()
         fetchUserInformation()
+        setupRecyclerView()
         observerUserInformation()
+    }
+
+    private fun setupRecyclerView() {
+        adapter = DashBoardRecentBillAdapter(arrayListOf())
+        binding.rcvRecentBills.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.rcvRecentBills.adapter = adapter
     }
 
     private fun setUpRecycleViewRecentBills(dailyBill: List<DailyBill>) {
@@ -47,10 +57,7 @@ class DashBoardFragment : Fragment() {
                 recentBillsModel.add(RecentBillsItemModel(bill, dBill.date!!))
             }
         }
-        val adapter = DashBoardRecentBillAdapter(recentBillsModel)
-        binding.rcvRecentBills.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        binding.rcvRecentBills.adapter = adapter
+        adapter.add(recentBillsModel)
     }
 
     private fun initRecycleView() {
@@ -92,13 +99,15 @@ class DashBoardFragment : Fragment() {
         dashBoardViewModel.userModelLiveData.observe(viewLifecycleOwner) { userM ->
             binding.tvMoney.text = userM.money.toString()
             var sumUsing = 0L
-            userM.dailyBills!!.forEach { daiBill ->
-                val billLists: ArrayList<Bill> = daiBill.bills!!
-                sumUsing += billLists.sumOf { it.cost!! }
-                val isOver = userM.creditLimit!!.money!! < sumUsing
-                handleColorBudget(isOver)
-                userM.dailyBills?.let { dailyBill ->
-                    setUpRecycleViewRecentBills(dailyBill)
+            if (userM.dailyBills != null) {
+                userM.dailyBills!!.forEach { daiBill ->
+                    val billLists: ArrayList<Bill> = daiBill.bills!!
+                    sumUsing += billLists.sumOf { it.cost!! }
+                    val isOver = userM.creditLimit!!.money!! < sumUsing
+                    handleColorBudget(isOver)
+                    userM.dailyBills?.let { dailyBill ->
+                        setUpRecycleViewRecentBills(dailyBill)
+                    }
                 }
             }
         }

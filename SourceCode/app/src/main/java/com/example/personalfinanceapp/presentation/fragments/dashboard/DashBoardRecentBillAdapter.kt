@@ -10,8 +10,15 @@ import com.example.personalfinanceapp.domain.model.bill.DailyBill
 import java.time.LocalDate
 
 class DashBoardRecentBillAdapter(
-    private val dailyBillList: List<RecentBillsItemModel>,
+    private var dailyBillList: ArrayList<RecentBillsItemModel>,
 ) : RecyclerView.Adapter<DashBoardRecentBillAdapter.DailyBillsViewHolder>() {
+
+    fun add(list: List<RecentBillsItemModel>) {
+        if (dailyBillList.isNotEmpty()) {
+            dailyBillList.clear()
+        }
+        dailyBillList.addAll(dailyBillList)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DailyBillsViewHolder {
         val binding =

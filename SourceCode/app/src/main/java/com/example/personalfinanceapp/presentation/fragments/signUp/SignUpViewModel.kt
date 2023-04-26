@@ -23,16 +23,17 @@ class SignUpViewModel @Inject constructor(
         if (!isCorrect) return
         requestFlow {
             accuracyUseCase.signUpWithEmailAndPassword(email!!, password!!).collect {
-                _signUpStateMutableLiveData.postValue(it)
-                createUser()
+                createUser(it)
             }
         }
     }
 
-    private fun createUser() {
+    private fun createUser(state: SignUpState) {
         requestFlow {
             userUseCase.getUserIdCurrent().collect { id ->
-                userUseCase.createUser(id).collect {}
+                userUseCase.createUser(id).collect {
+                    _signUpStateMutableLiveData.postValue(state)
+                }
             }
         }
     }
