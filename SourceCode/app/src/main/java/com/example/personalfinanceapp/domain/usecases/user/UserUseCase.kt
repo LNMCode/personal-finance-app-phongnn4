@@ -15,6 +15,8 @@ interface UserUseCase {
 
     suspend fun addBill(userId: String, dailyBills: List<DailyBill>): Flow<Boolean>
 
+    suspend fun updateBill(userId: String, dailyBills: List<DailyBill>): Flow<Boolean>
+
     suspend fun addIncome(userId: String, income: Long): Flow<Boolean>
 
     suspend fun minusMoney(userId: String, moneyOrigin: Long, moneyMinus: Long): Flow<Boolean>

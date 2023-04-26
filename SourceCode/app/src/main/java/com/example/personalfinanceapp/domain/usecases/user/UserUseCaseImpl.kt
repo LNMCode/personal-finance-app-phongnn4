@@ -36,6 +36,10 @@ class UserUseCaseImpl @Inject constructor(
         userRepository.addBill(userId, dailyBills)
     }
 
+    override suspend fun updateBill(userId: String, dailyBills: List<DailyBill>)= handleFlow {
+        userRepository.addBill(userId, dailyBills)
+    }
+
     override suspend fun addIncome(userId: String, income: Long) = handleFlow {
         userRepository.addIncome(userId, income)
     }

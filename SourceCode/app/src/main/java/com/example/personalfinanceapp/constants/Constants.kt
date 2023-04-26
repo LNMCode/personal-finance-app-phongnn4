@@ -6,6 +6,7 @@ import com.example.personalfinanceapp.extensions.DateTimeExtensions.toFormat
 import com.example.personalfinanceapp.presentation.activities.MainActivity
 import com.example.personalfinanceapp.presentation.activities.SignInUpActivity
 import java.time.LocalDate
+import kotlin.random.Random
 
 
 interface Constants {
@@ -45,7 +46,7 @@ interface Constants {
 
         fun getIdBillRanDom(): String {
             val rand = listOf(('0'..'9'), ('a'..'z'),
-                ('A'..'Z')).flatten().random()
+                ('A'..'Z')).flatten().random(Random(5))
             return getCurrentDateId() + rand
         }
     }

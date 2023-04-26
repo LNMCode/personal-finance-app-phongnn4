@@ -85,6 +85,19 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun updateBill(userId: String, dailyBills: List<DailyBill>) = flow {
+        try {
+            val data = hashMapOf(
+                Constants.FIELD_DAILY_BILLS to dailyBills
+            )
+            db.collection(Constants.COLLECTION_USER)
+                .document(userId).update(data as Map<String, Any>).await()
+            emit(true)
+        } catch (e: Exception) {
+            emit(false)
+        }
+    }
+
     override suspend fun addIncome(userId: String, income: Long) = flow {
         try {
             val data = hashMapOf(
