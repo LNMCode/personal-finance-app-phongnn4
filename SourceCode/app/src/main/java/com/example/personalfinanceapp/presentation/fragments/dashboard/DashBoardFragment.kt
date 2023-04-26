@@ -26,7 +26,7 @@ class DashBoardFragment : Fragment() {
 
     private val dashBoardViewModel: DashBoardViewModel by viewModels()
 
-    private lateinit var adapter : DashBoardRecentBillAdapter
+    private lateinit var adapter: DashBoardRecentBillAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -103,7 +103,10 @@ class DashBoardFragment : Fragment() {
                 userM.dailyBills!!.forEach { daiBill ->
                     val billLists: ArrayList<Bill> = daiBill.bills!!
                     sumUsing += billLists.sumOf { it.cost!! }
-                    val isOver = userM.creditLimit!!.money!! < sumUsing
+                    var isOver = false
+                    if (userM.creditLimit != null) {
+                        isOver = userM.creditLimit!!.money!! < sumUsing
+                    }
                     handleColorBudget(isOver)
                     userM.dailyBills?.let { dailyBill ->
                         setUpRecycleViewRecentBills(dailyBill)
@@ -116,9 +119,19 @@ class DashBoardFragment : Fragment() {
     @SuppressLint("ResourceAsColor")
     private fun handleColorBudget(isOver: Boolean) {
         if (isOver) {
-            binding.cvAvailableBalance.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.light_red))
+            binding.cvAvailableBalance.setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.light_red
+                )
+            )
         } else {
-            binding.cvAvailableBalance.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.background_line_01));
+            binding.cvAvailableBalance.setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.background_line_01
+                )
+            );
         }
     }
 }
